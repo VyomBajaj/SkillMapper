@@ -42,7 +42,7 @@ export const registerUser = async (req, res) => {
         const token = jwt.sign(payload, process.env.JWT_SECRET_KEY)
 
         console.log("User Created Successfully")
-        return res.status(201).send({ message: "Sucessfully Registered", authToken: token })
+        return res.status(201).send({ message: "User Sucessfully Registered", authToken: token })
 
     }
     catch (error) {
