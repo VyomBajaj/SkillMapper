@@ -3,15 +3,7 @@ import { Rocket, Compass, User } from "lucide-react";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-slate-900 via-gray-900 to-gray-800 text-white">
-      <header className="w-full px-8 py-6 flex justify-between items-center border-b border-gray-700">
-        <h1 className="text-2xl font-bold tracking-tight">SkillMap</h1>
-        <nav className="flex gap-6 text-sm">
-          <a href="#roadmap" className="hover:text-blue-400 transition">Roadmaps</a>
-          <a href="#roles" className="hover:text-blue-400 transition">Roles</a>
-          <a href="#about" className="hover:text-blue-400 transition">About</a>
-        </nav>
-      </header>
+    <div className="flex-grow min-h-screen bg-gradient-to-tr from-slate-900 via-gray-900 to-gray-800 text-white">
 
       <main className="px-8 py-12 max-w-6xl mx-auto">
         <section className="text-center mb-16">
@@ -49,10 +41,6 @@ const Home = () => {
           />
         </section>
       </main>
-
-      <footer className="text-center text-sm text-gray-500 py-6 border-t border-gray-700">
-        © {new Date().getFullYear()} SkillMap. All rights reserved.
-      </footer>
     </div>
   );
 };

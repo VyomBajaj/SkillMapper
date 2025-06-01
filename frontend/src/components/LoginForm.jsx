@@ -1,8 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../utils/AuthProvider.jsx";
+
 
 const LoginForm = () => {
+  const { setIsLoggedIn } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -10,9 +15,9 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm();
 
+  const navigate = useNavigate()
   // Form submit handler
   const onSubmit = async (data) => {
-    console.log("Login data:", data);
     try {
       const res = await axios.post('/api/auth/login', data)
       const { message, authToken } = res.data
@@ -22,7 +27,8 @@ const LoginForm = () => {
         username: '',
         password: '',
       });
-
+      setIsLoggedIn(true)
+      navigate('/')
     }
     catch (err) {
       console.error('Login error:', err.response?.data || err.message);
