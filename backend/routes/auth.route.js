@@ -1,6 +1,7 @@
 import express from 'express'
 import { body} from 'express-validator'
-import { loginUser, registerUser } from '../controllers/auth.controller.js'
+import { fetchUserDetails, loginUser, registerUser } from '../controllers/auth.controller.js'
+import { fetchUser } from '../middlewares/fetchUser.middleware.js'
 
 const router = express.Router()
 
@@ -18,5 +19,7 @@ router.post('/login',[
     body('username','Give a valid username').trim(),
     body('password','Enter min 5 digit password').isLength({min:5})
 ],loginUser)
+
+router.get('/getuser',fetchUser,fetchUserDetails)
 
 export default router
