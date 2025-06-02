@@ -20,6 +20,6 @@ router.post('/login',[
     body('password','Enter min 5 digit password').isLength({min:5})
 ],loginUser)
 
-router.get('/getuser',fetchUser,fetchUserDetails)
+router.post('/getuser',fetchUser,fetchUserDetails)
 
 export default router

@@ -101,8 +101,8 @@ export const loginUser = async (req, res) => {
 export const fetchUserDetails = async(req,res)=>{
     try {
         const userId = req.user.id;
-        const user = User.findById(userId).select('-password')
-        res.send(user)
+        const user = await User.findById(userId).select('-password')
+        res.json(user)
     } 
     catch (error) {
         console.log(error.message);
