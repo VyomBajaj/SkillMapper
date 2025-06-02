@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios'
 import { redirect, useNavigate } from 'react-router-dom';
 import { useAuth } from '../utils/AuthProvider.jsx';
+import { Link } from 'react-router-dom';
 
 
 const Signup = () => {
@@ -101,7 +102,7 @@ const Signup = () => {
         </form>
 
         <p className="mt-6 text-center text-sm text-gray-400">
-          Already have an account? <a href="/login" className="text-blue-400 hover:underline">Log in</a>
+          Already have an account? <Link to="/login" className="text-blue-400 hover:underline">Log in</Link>
         </p>
       </div>
     </div>

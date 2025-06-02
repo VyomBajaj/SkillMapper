@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import axios from 'axios'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthProvider.jsx";
 
 
@@ -93,7 +93,7 @@ const LoginForm = () => {
 
         <p className="mt-6 text-center text-sm text-gray-400">
           Don't have an account?{" "}
-          <a href="/signup" className="text-blue-400 hover:underline">Sign up</a>
+          <Link to="/signup" className="text-blue-400 hover:underline">Sign up</Link>
         </p>
       </div>
     </div>
