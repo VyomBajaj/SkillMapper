@@ -8,10 +8,9 @@ import LoginForm from './components/LoginForm.jsx'
 import Signup from './components/SignUpForm.jsx'
 import { AuthProvider } from './utils/AuthProvider.jsx'
 import PrivateRoute from './utils/PrivateRoute.jsx'
-import Dashboard from './components/Dashboard.jsx'
+import Dashboard from './components/Dashboard/Dashboard.jsx'
 import Profile from './components/Profile.jsx'
 import RoleDetailPage from './components/RoleDetailPage.jsx'
-import LandingPage from './components/LandingPage.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,7 +25,6 @@ const router = createBrowserRouter(
         <Route path = '' element = {<Profile/>}/>
       </Route>
       <Route path='roleDetail' element={<RoleDetailPage/>}/>
-      <Route path = 'landingpage' element = {<LandingPage/>}/>
     </Route>
   )
 )

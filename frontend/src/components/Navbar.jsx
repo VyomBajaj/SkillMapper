@@ -40,11 +40,14 @@ useEffect(() => {
             </>
           ) : (
             <>
-              <Link to="/dashboard" className="hover:text-blue-400 transition">Dashboard</Link>
-              <Link to="/profile" className="hover:text-blue-400 transition">Profile</Link>
-              <p>Hi:{userData.username}</p>
+               <NavLink to='/dashboard' className={({ isActive }) => {
+                return `hover:text-orange-400 transition ${isActive ? 'text-orange-500' : 'text-gray-300'}`
+              }}>Dashboard</NavLink>
+              <NavLink to='/' className={({ isActive }) => {
+                return `hover:text-orange-400 transition ${isActive ? 'text-orange-500' : 'text-gray-300'}`
+              }}>Hi:{userData.username}</NavLink>
               <Link
-                href="/login"
+                to="/login"
                 onClick={() => {
                   localStorage.removeItem('authToken')
                   setIsLoggedIn(false);
