@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from './Button';
 import { TrendingRoleCard } from './TrendingRoleCard';
@@ -9,6 +10,7 @@ import { TypewriterText } from './TypewriterEffect.jsx';
 
 // Main Landing Page Component
 const Dashboard = () => {
+  const navigate = useNavigate()
   const [trendingRoles, setTrendingRoles] = useState([]);
   const [otherRoles, setOtherRoles] = useState([]);
   const [user, setUser] = useState({});
@@ -58,10 +60,12 @@ const Dashboard = () => {
 
   const handleViewRoadmap = (roleId) => {
     console.log(`Navigate to roadmap for: ${roleId}`);
+    navigate('/roleDetail')
   };
 
   const handleLearnMore = (roleId) => {
     console.log(`Learn more about: ${roleId}`);
+    navigate('/roleDetail')
   };
 
   const handleCompleteProfile = () => {
