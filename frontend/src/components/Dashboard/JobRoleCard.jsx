@@ -3,16 +3,10 @@ import CardContent from "../Card/CardContent";
 import CardHeader from "../Card/CardHeader";
 import CardDescription from "../Card/CardDescription";
 import CardTitle from "../Card/CardTitle";
-import {ArrowRight,Code,Briefcase,BarChart3,Users} from "lucide-react";
-import { Badge } from "./Badge";
-import { Button } from "./Button";
-
-const iconMap = {
-  "BarChart3": <BarChart3 className="h-5 w-5" />,
-  "Code": <Code className="h-5 w-5" />,
-  "Users":<Users className="h-5 w-5" />,
-  "BriefCase":<Briefcase className="h-5 w-5" />
-}
+import {ArrowRight} from "lucide-react";
+import {Badge} from '../Badge/Badge';
+import { Button } from "../Button/Button";
+import { iconMap } from "../../data/iconMap";
 
 export const JobRoleCard = ({ role, onLearnMore }) => {
   return (

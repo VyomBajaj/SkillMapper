@@ -1,17 +1,13 @@
 import Card from "../Card/Card";
 import CardHeader from "../Card/CardHeader";
 import CardTitle from "../Card/CardTitle";
-import { Badge } from "./Badge";
+import { Badge } from "../Badge/Badge";
 import { TrendingUp,Star,ArrowRight,Code,Briefcase,Palette} from "lucide-react";
 import CardContent from "../Card/CardContent";
 import CardDescription from "../Card/CardDescription";
-import { Button } from "./Button";
+import { Button } from "../Button/Button";
+import { iconMap } from "../../data/iconMap";
 
-const iconMap = {
-  Code: <Code className="h-6 w-6" />,
-  Briefcase: <Briefcase className="h-6 w-6" />,
-  Palette: <Palette className="h-6 w-6" />,
-};
 
 export const TrendingRoleCard = ({ role, onViewRoadmap }) => {
   return (

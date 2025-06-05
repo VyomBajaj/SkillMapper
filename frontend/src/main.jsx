@@ -10,7 +10,7 @@ import { AuthProvider } from './utils/AuthProvider.jsx'
 import PrivateRoute from './utils/PrivateRoute.jsx'
 import Dashboard from './components/Dashboard/Dashboard.jsx'
 import Profile from './components/Profile.jsx'
-import RoleDetailPage from './components/RoleDetailPage.jsx'
+import RoleDetailPage from './components/RoleDetailsPage/RoleDetailPage.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,11 +20,11 @@ const router = createBrowserRouter(
       <Route path = 'signup' element={<Signup/>}/>
       <Route path='dashboard' element={<PrivateRoute/>}>
         <Route path ='' element = {<Dashboard/>}/>
+        <Route path='details/:id' element={<RoleDetailPage/>}/>
       </Route>
       <Route path='profile' element ={<PrivateRoute/>}>
         <Route path = '' element = {<Profile/>}/>
       </Route>
-      <Route path='roleDetail' element={<RoleDetailPage/>}/>
     </Route>
   )
 )

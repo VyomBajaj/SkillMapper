@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { Button } from './Button';
+import { Button } from '../Button/Button.jsx';
 import { TrendingRoleCard } from './TrendingRoleCard';
 import axios from 'axios'
 import { JobRoleCard } from './JobRoleCard';
@@ -60,12 +60,12 @@ const Dashboard = () => {
 
   const handleViewRoadmap = (roleId) => {
     console.log(`Navigate to roadmap for: ${roleId}`);
-    navigate('/roleDetail')
+    navigate(`/dashboard/details/${roleId}`)
   };
 
   const handleLearnMore = (roleId) => {
     console.log(`Learn more about: ${roleId}`);
-    navigate('/roleDetail')
+    navigate(`/dashboard/details/${roleId}`)
   };
 
   const handleCompleteProfile = () => {
@@ -131,7 +131,7 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {trendingRoles.map((role, index) => (
               <TrendingRoleCard
-                key={index}
+                key={role.id}
                 role={role}
                 onViewRoadmap={handleViewRoadmap}
               />
@@ -153,7 +153,7 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {otherRoles.map((role, index) => (
               <JobRoleCard
-                key={index}
+                key={role.id}
                 role={role}
                 onLearnMore={handleLearnMore}
               />
