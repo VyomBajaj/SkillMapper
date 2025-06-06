@@ -79,27 +79,31 @@ export const RoadmapPhase = ({ phase, isCompleted = false }) => {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="topics" className="mt-6">
-            <div className="space-y-3">
-              {phase.topics.map((topic, index) => (
-                <div key={index} className="flex items-center space-x-3 p-2 rounded hover:bg-gray-50">
-                  <Checkbox
-                    id={`topic-${phase.id}-${index}`}
-                    checked={checkedTopics[topic] || false}
-                    onChange={() => handleTopicCheck(topic)}
-                  />
-                  <label
-                    htmlFor={`topic-${phase.id}-${index}`}
-                    className={`text-sm cursor-pointer flex-grow ${
-                      checkedTopics[topic] ? "line-through text-gray-500" : ""
-                    }`}
-                  >
-                    {topic}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </TabsContent>
+<TabsContent value="topics" className="mt-6">
+  <div className="space-y-3">
+    {phase.topics.map((topic) => (
+      <div
+        key={topic.id}
+        className="flex items-center space-x-3 p-2 rounded hover:bg-gray-50"
+      >
+        <Checkbox
+          id={`topic-${phase.id}-${topic.id}`}
+          checked={checkedTopics[topic.name] || false}
+          onChange={() => handleTopicCheck(topic.name)}
+        />
+        <label
+          htmlFor={`topic-${phase.id}-${topic.id}`}
+          className={`text-sm cursor-pointer flex-grow ${
+            checkedTopics[topic.name] ? "line-through text-gray-500" : ""
+          }`}
+        >
+          {topic.name}
+        </label>
+      </div>
+    ))}
+  </div>
+</TabsContent>
+
 
           <TabsContent value="resources" className="mt-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

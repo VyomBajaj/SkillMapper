@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Users, DollarSign, TrendingUp, BookOpen, Code, Play, FileText, Youtube, Globe } from 'lucide-react';
+import { Clock, Users, DollarSign, TrendingUp} from 'lucide-react';
 import { ProgressBar } from './ProgressBar';
 import { Badge } from '../Badge/Badge';
 import Card from '../Card/Card';
