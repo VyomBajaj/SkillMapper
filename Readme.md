@@ -18,6 +18,8 @@ Progress model for saving which steps are completed
 
 I plan to add:
 
+AI-based dynamic roadmap generation
+
 Save and sync progress feature across sessions
 
 Filtering based on user’s current skills
