@@ -12,8 +12,8 @@ import { RoadmapPhase } from './RoadmapPhase';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-// Main Component
 const RoleDetailPage = () => {
+  const [overallProgress, setOverallProgress] = useState(0);
   const {id} = useParams()
   const [role, setRole] = useState([])
   useEffect(() => {
@@ -21,7 +21,6 @@ const RoleDetailPage = () => {
       try {
         const res = await axios.get(`/api/staticRoles/details/${id}`)
         setRole(res.data)
-        console.log(res.data)
       }
       catch (error) {
         console.log("Error in getting trending roles:", error);
@@ -90,7 +89,8 @@ const RoleDetailPage = () => {
             </div>
 
             {role[0].roadmap.map((phase) => (
-              <RoadmapPhase key={phase.id} phase={phase} isCompleted={false} />
+              <RoadmapPhase key={phase.id} phase={phase} isCompleted={false} roadmapId={id}
+                  onProgressUpdate={setOverallProgress} />
             ))}
           </div>
 
@@ -143,9 +143,9 @@ const RoleDetailPage = () => {
                   <div>
                     <div className="flex justify-between text-sm mb-1">
                       <span>Overall Completion</span>
-                      <span>0%</span>
+                      <span>{overallProgress}%</span>
                     </div>
-                    <ProgressBar value={0} className="h-2" />
+                    <ProgressBar value={overallProgress} className="h-2"  />
                   </div>
                   <p className="text-sm text-blue-800">
                     Start checking off topics and projects to see your progress!
