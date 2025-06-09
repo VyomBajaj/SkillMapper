@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from 'axios'
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthProvider.jsx";
-
+import { Bounce, toast,ToastContainer } from 'react-toastify';
 
 const LoginForm = () => {
   const { setIsLoggedIn } = useAuth();
@@ -21,18 +21,41 @@ const LoginForm = () => {
     try {
       const res = await axios.post('/api/auth/login', data)
       const { message, authToken } = res.data
-      alert(message);
+
       localStorage.setItem('authToken', authToken)
       reset({
         username: '',
         password: '',
       });
       setIsLoggedIn(true)
-      navigate('/')
+
+      toast(message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+        onClose: () => navigate('/'),
+      });
     }
     catch (err) {
       console.error('Login error:', err.response?.data || err.message);
-      alert(err.response?.data || 'Login failed');
+      const msg = err.response?.data || 'Login failed'
+      toast.error(msg, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
 
   };
@@ -96,7 +119,21 @@ const LoginForm = () => {
           <Link to="/signup" className="text-blue-400 hover:underline">Sign up</Link>
         </p>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
     </div>
+
   );
 };
 

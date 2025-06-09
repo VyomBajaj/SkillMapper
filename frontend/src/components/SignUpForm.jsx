@@ -1,30 +1,55 @@
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../utils/AuthProvider.jsx';
 import { Link } from 'react-router-dom';
+import { ToastContainer, Bounce, toast } from 'react-toastify';
 
 
 const Signup = () => {
   const { setIsLoggedIn } = useAuth();
   const navigate = useNavigate()
-  const { control, register, handleSubmit,reset, formState: { errors }, } = useForm()
+  const { control, register, handleSubmit, reset, formState: { errors }, } = useForm()
 
   const onSubmit = async (data) => {
     try {
       const res = await axios.post('/api/auth/register', data);
       const { message, authToken } = res.data
-      alert(message || 'Successfully Registered');
       localStorage.setItem('authToken', authToken);
       reset({
         username: '',
         password: '',
       });
+
       setIsLoggedIn(true)
-      navigate('/')
+
+      toast(message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+        onClose: () => navigate('/'),
+      });
     } catch (err) {
       console.error('Signup error:', err.response?.data || err.message);
-      alert(err.response?.data?.message || 'Signup failed');
+      const msg = (err.response?.data?.message || 'Signup failed');
+      toast(msg, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+
     }
   };
 
@@ -105,6 +130,19 @@ const Signup = () => {
           Already have an account? <Link to="/login" className="text-blue-400 hover:underline">Log in</Link>
         </p>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
     </div>
   );
 };

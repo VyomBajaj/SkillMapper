@@ -504,8 +504,7 @@
   ],
   "skills": ["JavaScript", "React", "Node.js", "Express", "MongoDB", "PostgreSQL", "Git", "AWS"],
   "companies": ["Netflix", "Airbnb", "Spotify", "Stripe", "Shopify", "GitHub"]
-},
-{
+},{
   "name": "UI/UX Designer",
   "roadmapId": 3,
   "description": "Design intuitive and visually appealing digital interfaces that enhance user experience across web and mobile platforms.",
@@ -758,9 +757,7 @@
     "Shopify"
   ]
 }
-,
-
-{
+,{
   "name": "Data Scientist",
   "roadmapId": 4,
   "description": "Analyze complex data, build predictive models, and derive actionable insights to support business decisions.",
@@ -1001,6 +998,232 @@
     "Python", "Pandas", "Scikit-learn", "Statistics", "Machine Learning", "Data Visualization", "SQL", "TensorFlow"
   ],
   "companies": ["Google", "Facebook", "Amazon", "Netflix", "Uber", "IBM"]
-}
-
-]
+},{
+  "name": "Mobile App Developer",
+  "roadmapId": 8,
+  "description": "Design, develop, and maintain mobile applications for Android and iOS platforms using native or cross-platform technologies.",
+  "salary": "$80k - $140k",
+  "demand": "High",
+  "growth": "+24%",
+  "timeToLearn": "6-10 months",
+  "overview": "Mobile developers specialize in building responsive and performant applications for mobile devices. They work with tools like Flutter, React Native, or native SDKs to create apps for Android and iOS platforms.",
+  "roadmap": [
+    {
+      "id": 1,
+      "phase": "Foundation",
+      "title": "Programming & Mobile Basics",
+      "duration": "4-5 weeks",
+      "difficulty": "Beginner",
+      "description": "Learn programming fundamentals and understand the basics of mobile app development.",
+      "topics": [
+        { "id": 1, "name": "OOP concepts and Dart/JavaScript basics" },
+        { "id": 2, "name": "Version control with Git and GitHub" },
+        { "id": 3, "name": "Introduction to mobile ecosystems (iOS & Android)" },
+        { "id": 4, "name": "Responsive design and layout principles" }
+      ],
+      "resources": [
+        {
+          "type": "course",
+          "title": "Introduction to Programming",
+          "provider": "freeCodeCamp",
+          "url": "#",
+          "icon": "Play"
+        },
+        {
+          "type": "book",
+          "title": "Eloquent JavaScript",
+          "provider": "Marijn Haverbeke",
+          "url": "#",
+          "icon": "BookOpen"
+        },
+        {
+          "type": "practice",
+          "title": "GitHub First Contribution",
+          "provider": "GitHub",
+          "url": "#",
+          "icon": "Globe"
+        }
+      ],
+      "projects": [
+        {
+          "id": 1,
+          "title": "Responsive UI Clone",
+          "description": "Recreate the UI of a basic app screen (e.g. login)",
+          "difficulty": "Beginner",
+          "duration": "1 week",
+          "skills": ["Layout", "Flexbox", "Mobile UI"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "phase": "Cross-Platform Development",
+      "title": "Flutter or React Native",
+      "duration": "6-8 weeks",
+      "difficulty": "Intermediate",
+      "description": "Learn to build apps using a cross-platform framework.",
+      "topics": [
+        { "id": 1, "name": "Flutter widgets / React Native components" },
+        { "id": 2, "name": "State management (Provider / Redux / Context)" },
+        { "id": 3, "name": "Navigation and routing" },
+        { "id": 4, "name": "Forms, input handling, and validation" },
+        { "id": 5, "name": "HTTP requests and API integration" }
+      ],
+      "resources": [
+        {
+          "type": "course",
+          "title": "Flutter Development Bootcamp",
+          "provider": "App Brewery",
+          "url": "#",
+          "icon": "Play"
+        },
+        {
+          "type": "tutorial",
+          "title": "React Native Crash Course",
+          "provider": "YouTube - Programming with Mosh",
+          "url": "#",
+          "icon": "Code"
+        },
+        {
+          "type": "documentation",
+          "title": "Flutter Docs",
+          "provider": "flutter.dev",
+          "url": "#",
+          "icon": "FileText"
+        }
+      ],
+      "projects": [
+        {
+          "id": 1,
+          "title": "To-Do App",
+          "description": "Create a fully functional to-do app with state management",
+          "difficulty": "Intermediate",
+          "duration": "2 weeks",
+          "skills": ["Flutter/React Native", "State Management", "UI/UX"]
+        },
+        {
+          "id": 2,
+          "title": "Weather App",
+          "description": "Fetch and display weather data using a public API",
+          "difficulty": "Intermediate",
+          "duration": "2 weeks",
+          "skills": ["API Integration", "HTTP", "Data Parsing"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "phase": "Advanced Features",
+      "title": "Native APIs, Databases & Animations",
+      "duration": "6-8 weeks",
+      "difficulty": "Advanced",
+      "description": "Work with native device features, local storage, and advanced UI.",
+      "topics": [
+        { "id": 1, "name": "SQLite / Hive / AsyncStorage" },
+        { "id": 2, "name": "Camera, GPS, and permissions" },
+        { "id": 3, "name": "Push notifications" },
+        { "id": 4, "name": "App animations and transitions" },
+        { "id": 5, "name": "Testing and debugging apps" }
+      ],
+      "resources": [
+        {
+          "type": "course",
+          "title": "Advanced Flutter",
+          "provider": "Udemy",
+          "url": "#",
+          "icon": "Play"
+        },
+        {
+          "type": "documentation",
+          "title": "React Native APIs",
+          "provider": "reactnative.dev",
+          "url": "#",
+          "icon": "FileText"
+        },
+        {
+          "type": "practice",
+          "title": "Firebase Integration",
+          "provider": "Firebase",
+          "url": "#",
+          "icon": "Globe"
+        }
+      ],
+      "projects": [
+        {
+          "id": 1,
+          "title": "Chat Application",
+          "description": "Real-time chat app with Firebase backend",
+          "difficulty": "Advanced",
+          "duration": "3 weeks",
+          "skills": ["Firebase", "Authentication", "Messaging"]
+        },
+        {
+          "id": 2,
+          "title": "Travel Tracker App",
+          "description": "Use GPS and maps to track travel history",
+          "difficulty": "Advanced",
+          "duration": "3-4 weeks",
+          "skills": ["Maps", "Permissions", "Native APIs"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "phase": "Deployment & Real World Projects",
+      "title": "Publishing & CI/CD",
+      "duration": "4-6 weeks",
+      "difficulty": "Advanced",
+      "description": "Deploy apps to stores and automate testing and delivery pipelines.",
+      "topics": [
+        { "id": 1, "name": "App store guidelines (Google Play, App Store)" },
+        { "id": 2, "name": "Code signing and release builds" },
+        { "id": 3, "name": "Crash reporting and analytics" },
+        { "id": 4, "name": "CI/CD tools for mobile (Codemagic, Bitrise, GitHub Actions)" },
+        { "id": 5, "name": "OTA updates (CodePush / Firebase)" }
+      ],
+      "resources": [
+        {
+          "type": "course",
+          "title": "Publishing Flutter Apps",
+          "provider": "Udacity",
+          "url": "#",
+          "icon": "Play"
+        },
+        {
+          "type": "documentation",
+          "title": "Play Console Help",
+          "provider": "Google",
+          "url": "#",
+          "icon": "FileText"
+        },
+        {
+          "type": "practice",
+          "title": "Codemagic CI/CD Setup",
+          "provider": "Codemagic",
+          "url": "#",
+          "icon": "Globe"
+        }
+      ],
+      "projects": [
+        {
+          "id": 1,
+          "title": "Released App on Play Store",
+          "description": "Build and publish a full app to the Play Store",
+          "difficulty": "Advanced",
+          "duration": "3-4 weeks",
+          "skills": ["Release Build", "Play Store", "CI/CD"]
+        },
+        {
+          "id": 2,
+          "title": "Portfolio App",
+          "description": "Showcase your skills and projects in a portfolio mobile app",
+          "difficulty": "Intermediate",
+          "duration": "2-3 weeks",
+          "skills": ["Design", "UX", "Deployment"]
+        }
+      ]
+    }
+  ],
+  "skills": ["Flutter", "React Native", "Firebase", "SQLite", "REST APIs", "JavaScript", "Dart", "CI/CD"],
+  "companies": ["Google", "Instagram", "Spotify", "Swiggy", "Zomato", "Razorpay"]
+}]
