@@ -1,6 +1,9 @@
 import express from 'express'
 import fs from 'fs';
 import { StaticRoadmap } from '../models/staticRoadmap.model.js';
+import { fetchUser } from '../middlewares/fetchUser.middleware.js';
+import { Progress } from '../models/progress.model.js';
+import mongoose from 'mongoose';
 
 const router = express.Router()
 
@@ -64,6 +67,89 @@ router.post('/seed-roadmap',async(req,res)=>{
     catch (error) {
         console.error(error);
         return res.status(500).json({ message: error.message });
+    }
+})
+
+router.get('/progress/:roadmapId',fetchUser,async(req,res)=>{
+    try {
+        const user = req.user.id;
+        const roadmapId = (req.params.roadmapId);
+        const progress = await Progress.findOne({userId:user,roadmapId})
+        if(!progress){
+            return res.json([{}])
+        }
+        return res.status(200).json({completedTopics:progress.completedTopics,
+                                    completedProjects:progress.completedProjects
+        })
+    } 
+    catch (error) {
+        return res.status(500).send(error.message)
+    }
+})
+
+router.patch('/progress/updateTopic',fetchUser,async(req,res)=>{
+    try {
+        const userId = req.user.id;
+        const {topicId,phaseId,roadmapId,action} = req.body
+        if(!topicId || !phaseId || !roadmapId || !action){
+            res.status(400).send("Invalid Patch Request")
+        }
+        let updateTopic;
+        if(action == "add"){
+            updateTopic = {$addToSet:{completedTopics:{
+                phaseId,
+                topicId
+            }}}
+        }
+        else{
+            updateTopic = {$pull:{completedTopics:{
+                phaseId,
+                topicId
+            }}}
+        }
+
+        const updateProgress = await Progress.findOneAndUpdate({userId,roadmapId},
+                                                                updateTopic,
+                                                            { new: true, upsert: true }
+        )
+        return res.status(200).json(updateProgress);
+
+    } 
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+})
+
+router.patch('/progress/updateProject',fetchUser,async(req,res)=>{
+    try {
+        const userId = req.user.id;
+        const {projectId,phaseId,roadmapId,action} = req.body
+        if(!projectId || !phaseId || !roadmapId || !action){
+            return res.status(400).send("Invalid Patch Request")
+        }
+        let updateProject;
+        if(action == "add"){
+            updateProject = {$addToSet:{completedProjects:{
+                phaseId,
+                projectId
+            }}}
+        }
+        else{
+            updateProject = {$pull:{completedProjects:{
+                phaseId,
+                projectId
+            }}}
+        }
+
+        const updateProgress = await Progress.findOneAndUpdate({userId,roadmapId},
+                                                                updateProject,
+                                                            { new: true, upsert: true }
+        )
+        return res.status(200).json(updateProgress);
+
+    } 
+    catch (error) {
+        return res.status(500).json({ error: error.message });
     }
 })
 

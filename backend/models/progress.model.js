@@ -7,8 +7,7 @@ const progressSchema = new mongoose.Schema({
         required: true
     },
     roadmapId: {
-        type: Schema.Types.ObjectId,
-        ref: 'StaticRoadmap',
+        type: Number,
         required: true
     },
     completedTopics: [{
@@ -25,5 +24,5 @@ const progressSchema = new mongoose.Schema({
     }
 })
 
-const Progress = new mongoose.model('Progress',progressSchema)
+export const Progress = new mongoose.model('Progress',progressSchema)
 
