@@ -1,241 +1,212 @@
 [{
-  "name": "AI/ML Engineer",
+  "name": "Machine Learning Engineer",
   "roadmapId": 1,
-  "description": "Design and deploy machine learning models and intelligent systems using data-driven techniques and deep learning.",
-  "salary": "$100k - $170k",
-  "demand": "Very High",
-  "growth": "+38%",
-  "timeToLearn": "8-12 months",
-  "overview": "AI/ML Engineers specialize in creating systems that can learn from data and make decisions. They use mathematics, programming, and data handling skills to build models for predictions, automation, and intelligent applications.",
+  "description": "Learn to build, evaluate, and deploy machine learning models through math foundations, practical tools, and real-world projects.",
+  "salary": "$90k - $150k",
+  "demand": "High",
+  "growth": "+31%",
+  "timeToLearn": "6-8 months",
+  "overview": "Machine Learning Engineers design algorithms and models that enable computers to learn from data and make predictions or decisions. This roadmap follows a structured path covering Python, math, ML algorithms, and deployment.",
   "roadmap": [
     {
       "id": 1,
       "phase": "Foundation",
-      "title": "Math, Python & Data Basics",
+      "title": "Testing the Waters",
       "duration": "4-6 weeks",
       "difficulty": "Beginner",
-      "description": "Understand math concepts and learn Python for data processing",
+      "description": "Start with Python, libraries like NumPy and Pandas, and basic statistics for EDA.",
       "topics": [
-        { "id": 1, "name": "Python fundamentals and libraries (NumPy, Pandas)" },
-        { "id": 2, "name": "Basic statistics and probability" },
-        { "id": 3, "name": "Linear algebra concepts for ML" },
-        { "id": 4, "name": "Data preprocessing and cleaning" },
-        { "id": 5, "name": "Exploratory Data Analysis (EDA)" }
+        { "id": 1, "name": "Python programming basics and OOP" },
+        { "id": 2, "name": "NumPy and Pandas" },
+        { "id": 3, "name": "Data visualization with Matplotlib and Seaborn" },
+        { "id": 4, "name": "Descriptive statistics" },
+        { "id": 5, "name": "Exploratory Data Analysis (EDA)" },
+        { "id": 6, "name": "Intro to Machine Learning" }
       ],
       "resources": [
         {
           "type": "course",
-          "title": "Python for Data Science",
-          "provider": "Coursera",
-          "url": "#",
+          "title": "Python Basics - CampusX",
+          "provider": "YouTube",
+          "url": "https://www.youtube.com/playlist?list=PLKnIA16_Rmvb1RYR-iTA_hzckhdONtSW4",
           "icon": "Play"
         },
         {
-          "type": "book",
-          "title": "Think Stats",
-          "provider": "O'Reilly",
-          "url": "#",
-          "icon": "BookOpen"
+          "type": "practice",
+          "title": "NumPy 100 Problems",
+          "provider": "GitHub",
+          "url": "https://github.com/rougier/numpy-100",
+          "icon": "Globe"
         },
         {
-          "type": "practice",
-          "title": "Kaggle Python Exercises",
-          "provider": "Kaggle",
-          "url": "#",
-          "icon": "Globe"
+          "type": "course",
+          "title": "Data Analysis - CampusX",
+          "provider": "YouTube",
+          "url": "https://www.youtube.com/watch?v=ZhacwtUR0SU",
+          "icon": "Play"
         }
       ],
       "projects": [
         {
           "id": 1,
-          "title": "Data Cleaning Notebook",
-          "description": "Practice data cleaning techniques on messy datasets",
+          "title": "Titanic EDA",
+          "description": "Perform detailed EDA on Titanic dataset",
           "difficulty": "Beginner",
           "duration": "1 week",
-          "skills": ["Pandas", "EDA", "Python"]
+          "skills": ["Pandas", "Seaborn", "EDA"]
         },
         {
           "id": 2,
-          "title": "Basic Linear Regression",
-          "description": "Build a simple regression model to predict housing prices",
+          "title": "Data Wrangling Notebook",
+          "description": "Clean and process messy datasets",
           "difficulty": "Beginner",
-          "duration": "1-2 weeks",
-          "skills": ["NumPy", "Matplotlib", "Linear Algebra"]
+          "duration": "1 week",
+          "skills": ["Data Cleaning", "Pandas", "Python"]
         }
       ]
     },
     {
       "id": 2,
-      "phase": "Machine Learning Core",
-      "title": "Supervised & Unsupervised Learning",
-      "duration": "6-8 weeks",
+      "phase": "Mathematical Foundation",
+      "title": "Gaining Conceptual Depth",
+      "duration": "5-6 weeks",
       "difficulty": "Intermediate",
-      "description": "Master the core ML algorithms and their applications",
+      "description": "Dive deep into linear algebra, statistics, and calculus for ML.",
       "topics": [
-        { "id": 1, "name": "Supervised vs unsupervised learning" },
-        { "id": 2, "name": "Regression and classification models" },
-        { "id": 3, "name": "Clustering (K-Means, DBSCAN)" },
-        { "id": 4, "name": "Model evaluation and metrics" },
-        { "id": 5, "name": "Overfitting and regularization" }
+        { "id": 1, "name": "Linear algebra concepts (vectors, matrices)" },
+        { "id": 2, "name": "Calculus basics for gradient descent" },
+        { "id": 3, "name": "Probability and statistics" },
+        { "id": 4, "name": "Hypothesis testing" },
+        { "id": 5, "name": "Evaluation metrics and error analysis" }
       ],
       "resources": [
         {
           "type": "course",
-          "title": "Machine Learning",
-          "provider": "Andrew Ng - Coursera",
-          "url": "#",
+          "title": "Linear Algebra - CampusX",
+          "provider": "YouTube",
+          "url": "https://www.youtube.com/watch?v=e9h-ZZ_ahRg",
           "icon": "Play"
         },
         {
-          "type": "documentation",
-          "title": "Scikit-learn Docs",
-          "provider": "scikit-learn",
-          "url": "#",
-          "icon": "FileText"
-        },
-        {
-          "type": "practice",
-          "title": "Kaggle Titanic ML Challenge",
-          "provider": "Kaggle",
-          "url": "#",
-          "icon": "Globe"
+          "type": "course",
+          "title": "Calculus for ML",
+          "provider": "3Blue1Brown",
+          "url": "https://www.youtube.com/playlist?list=PLrAXtmErZgOdmeg3b1f4_NI0B0M8z0b8G",
+          "icon": "Play"
         }
       ],
       "projects": [
         {
           "id": 1,
-          "title": "Iris Classifier",
-          "description": "Train a classification model on the Iris dataset",
+          "title": "Metrics Explorer",
+          "description": "Implement precision, recall, F1-score from scratch",
           "difficulty": "Intermediate",
           "duration": "1 week",
-          "skills": ["Classification", "Scikit-learn", "Model Evaluation"]
-        },
-        {
-          "id": 2,
-          "title": "Customer Segmentation",
-          "description": "Use clustering to segment customers based on purchasing behavior",
-          "difficulty": "Intermediate",
-          "duration": "2 weeks",
-          "skills": ["Clustering", "EDA", "Visualization"]
+          "skills": ["Python", "Math", "ML Metrics"]
         }
       ]
     },
     {
       "id": 3,
-      "phase": "Deep Learning & Neural Networks",
-      "title": "Neural Networks & Computer Vision",
-      "duration": "6-10 weeks",
-      "difficulty": "Advanced",
-      "description": "Explore deep learning techniques and work with image data",
+      "phase": "Core ML",
+      "title": "Learning Practical ML",
+      "duration": "6-8 weeks",
+      "difficulty": "Intermediate",
+      "description": "Hands-on ML models, scikit-learn, and core algorithms.",
       "topics": [
-        { "id": 1, "name": "Neural network architecture (perceptron, MLP)" },
-        { "id": 2, "name": "CNNs for image recognition" },
-        { "id": 3, "name": "Transfer learning" },
-        { "id": 4, "name": "PyTorch or TensorFlow basics" },
-        { "id": 5, "name": "Loss functions and optimizers" }
+        { "id": 1, "name": "Regression, classification models" },
+        { "id": 2, "name": "Decision trees and ensemble methods" },
+        { "id": 3, "name": "Model validation and tuning" },
+        { "id": 4, "name": "Clustering and dimensionality reduction" }
       ],
       "resources": [
         {
           "type": "course",
-          "title": "Deep Learning Specialization",
-          "provider": "Coursera",
-          "url": "#",
+          "title": "ML Algorithms - CampusX",
+          "provider": "YouTube",
+          "url": "https://www.youtube.com/playlist?list=PLKnIA16_RmvbQKMW1_U5K5PNbC1qLb1lD",
           "icon": "Play"
         },
         {
-          "type": "tutorial",
-          "title": "PyTorch for Beginners",
-          "provider": "YouTube - freeCodeCamp",
-          "url": "#",
-          "icon": "Code"
-        },
-        {
-          "type": "book",
-          "title": "Dive into Deep Learning",
-          "provider": "d2l.ai",
-          "url": "#",
-          "icon": "BookOpen"
+          "type": "documentation",
+          "title": "Scikit-learn Documentation",
+          "provider": "scikit-learn.org",
+          "url": "https://scikit-learn.org/stable/",
+          "icon": "FileText"
         }
       ],
       "projects": [
         {
           "id": 1,
-          "title": "MNIST Digit Classifier",
-          "description": "Build a CNN to recognize handwritten digits",
+          "title": "House Price Prediction",
+          "description": "Train regression models on real estate data",
           "difficulty": "Intermediate",
           "duration": "2 weeks",
-          "skills": ["CNN", "PyTorch", "Image Processing"]
+          "skills": ["Scikit-learn", "Regression", "EDA"]
         },
         {
           "id": 2,
-          "title": "Face Recognition System",
-          "description": "Build a basic facial recognition system using deep learning",
-          "difficulty": "Advanced",
-          "duration": "3-4 weeks",
-          "skills": ["Deep Learning", "Computer Vision", "FaceNet/DeepFace"]
+          "title": "Customer Segmentation with K-Means",
+          "description": "Apply unsupervised learning to market segmentation",
+          "difficulty": "Intermediate",
+          "duration": "2 weeks",
+          "skills": ["K-Means", "Visualization", "Unsupervised Learning"]
         }
       ]
     },
     {
       "id": 4,
-      "phase": "Deployment & Real World Projects",
-      "title": "Model Deployment & MLOps",
-      "duration": "4-6 weeks",
+      "phase": "Advanced Concepts",
+      "title": "Neural Networks & Projects",
+      "duration": "6-10 weeks",
       "difficulty": "Advanced",
-      "description": "Learn how to deploy and maintain ML systems in production",
+      "description": "Neural networks, deployment, domain-specific knowledge, and complete projects.",
       "topics": [
-        { "id": 1, "name": "Model serving with Flask/FastAPI" },
-        { "id": 2, "name": "Model serialization with Pickle/ONNX" },
-        { "id": 3, "name": "Streamlit and Gradio for ML apps" },
-        { "id": 4, "name": "Cloud services (GCP, AWS, Hugging Face)" },
-        { "id": 5, "name": "CI/CD and monitoring" }
+        { "id": 1, "name": "Basics of Neural Networks (Perceptron, MLP)" },
+        { "id": 2, "name": "Intro to Deep Learning with PyTorch" },
+        { "id": 3, "name": "Model Deployment with Flask/Streamlit" },
+        { "id": 4, "name": "Time Series / NLP / Computer Vision Introduction" }
       ],
       "resources": [
         {
           "type": "course",
-          "title": "Deploying ML Models",
-          "provider": "Udemy",
-          "url": "#",
+          "title": "Deep Learning - CampusX",
+          "provider": "YouTube",
+          "url": "https://www.youtube.com/playlist?list=PLKnIA16_RmvZxtLbmpN1ZRaVmLx5u0DDr",
           "icon": "Play"
         },
         {
-          "type": "documentation",
-          "title": "FastAPI Docs",
-          "provider": "FastAPI",
-          "url": "#",
-          "icon": "FileText"
-        },
-        {
-          "type": "practice",
-          "title": "Streamlit Gallery",
-          "provider": "Streamlit",
-          "url": "#",
+          "type": "tutorial",
+          "title": "Streamlit for ML Apps",
+          "provider": "Streamlit.io",
+          "url": "https://streamlit.io",
           "icon": "Globe"
         }
       ],
       "projects": [
         {
           "id": 1,
-          "title": "ML Model Web App",
-          "description": "Deploy an ML model with FastAPI and visualize using Streamlit",
+          "title": "Digit Recognizer with PyTorch",
+          "description": "Build a simple CNN on the MNIST dataset",
           "difficulty": "Advanced",
           "duration": "3 weeks",
-          "skills": ["FastAPI", "Streamlit", "Deployment"]
+          "skills": ["PyTorch", "CNN", "Computer Vision"]
         },
         {
           "id": 2,
-          "title": "End-to-End ML Pipeline",
-          "description": "Create a full ML workflow from data to deployment",
+          "title": "End-to-End ML App",
+          "description": "Train, evaluate and deploy a complete ML model",
           "difficulty": "Advanced",
-          "duration": "4 weeks",
-          "skills": ["MLOps", "Cloud Deployment", "Data Engineering"]
+          "duration": "3-4 weeks",
+          "skills": ["Deployment", "Flask/Streamlit", "CI/CD"]
         }
       ]
     }
   ],
-  "skills": ["Python", "Scikit-learn", "PyTorch", "TensorFlow", "Pandas", "NumPy", "SQL", "Docker"],
-  "companies": ["Google", "NVIDIA", "Meta", "Tesla", "Amazon", "Hugging Face"]
-},{
+  "skills": ["Python", "NumPy", "Pandas", "Matplotlib", "Scikit-learn", "PyTorch", "EDA", "ML Algorithms"],
+  "companies": ["Google", "Amazon", "Meta", "Hugging Face", "Tesla", "Apple"]
+}
+,{
   "name": "Full Stack Developer",
   "roadmapId": 2,
   "description": "Master both frontend and backend development to build complete web applications from database to user interface.",

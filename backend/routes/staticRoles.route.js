@@ -3,7 +3,6 @@ import fs from 'fs';
 import { StaticRoadmap } from '../models/staticRoadmap.model.js';
 import { fetchUser } from '../middlewares/fetchUser.middleware.js';
 import { Progress } from '../models/progress.model.js';
-import mongoose from 'mongoose';
 
 const router = express.Router()
 

@@ -40,7 +40,7 @@ const Signup = () => {
       const msg = (err.response?.data?.message || 'Signup failed');
       toast(msg, {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
