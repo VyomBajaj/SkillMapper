@@ -27,7 +27,6 @@ router.get('/details/:roadmapId', (req, res) => {
         const final = data.filter((role) => {
             return role.roadmapId == id
         })
-        console.log(final)
         return res.status(200).json(final)
     }
     catch (error) {

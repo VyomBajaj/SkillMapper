@@ -29,11 +29,11 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    skills: [{
-    type: String,
+    skills: {
+    type: [String],
     enum: allowedSkills,
     default:[]
-  }],
+  },
     goal:{
         type:String,
         enum:allowedGoals,
@@ -42,8 +42,19 @@ const userSchema = new mongoose.Schema({
     designation:{
         type:String,
         default:""
+    },
+    currentStreak:{
+      type:Number,
+      default:0,
+    },
+    bio:{
+      type:String,
+      default:""
+    },
+    avatar:{
+      type:String,
+      default:""
     }
-
 },{timestamps:true})
 
 export const User = mongoose.model('User',userSchema);
