@@ -11,6 +11,8 @@ import PrivateRoute from './utils/PrivateRoute.jsx'
 import Dashboard from './components/Dashboard/Dashboard.jsx'
 import Profile from './components/Profile.jsx'
 import RoleDetailPage from './components/RoleDetailsPage/RoleDetailPage.jsx'
+import ProfilePage from './components/ProfilePage/ProfilePage.jsx'
+import PersonalizedRoamap from './components/PersonalisedRoadmap/PersonalizedRoadmap.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,9 +24,7 @@ const router = createBrowserRouter(
         <Route path ='' element = {<Dashboard/>}/>
         <Route path='details/:id' element={<RoleDetailPage/>}/>
       </Route>
-      <Route path='profile' element ={<PrivateRoute/>}>
-        <Route path = '' element = {<Profile/>}/>
-      </Route>
+      <Route path = 'personalised-roadmap' element = {<PersonalizedRoamap/>}/>
     </Route>
   )
 )
