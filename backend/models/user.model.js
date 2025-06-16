@@ -54,6 +54,14 @@ const userSchema = new mongoose.Schema({
     avatar:{
       type:String,
       default:""
+    },
+    isProfileCompleted:{
+      type:Boolean,
+      default:false
+    },
+    time:{
+      type:String,
+      default:""
     }
 },{timestamps:true})
 

@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import { connectDB } from './utils/db.js'
 import authRouter from './routes/auth.route.js'
 import staticRoleRouter from './routes/staticRoles.route.js'
+import userRouter from './routes/user.route.js'
 
 dotenv.config()
 connectDB()
@@ -22,6 +23,7 @@ app.get('/',(req,res)=>{
 
 app.use('/api/auth',authRouter)
 app.use('/api/staticRoles',staticRoleRouter);
+app.use('/api/user',userRouter)
 
 app.listen(PORT,()=>{
     console.log("App running on PORT 8000")
