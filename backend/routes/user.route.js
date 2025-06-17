@@ -22,10 +22,11 @@ router.post('/complete-profile', fetchUser, upload.single('avatar'), async (req,
     if (!user) return res.status(401).send("User should login first");
 
     const update = {
-      goal:targetRole,
-      time:timeCanGive,
+      goal: targetRole,
+      time: timeCanGive,
       designation,
       bio,
+      isProfileCompleted:true,
     };
     if (req.file) {
       const result = await cloudinary.uploader.upload(req.file.path, {
@@ -53,7 +54,11 @@ router.post('/complete-profile', fetchUser, upload.single('avatar'), async (req,
 
     if (!updatedUser) return res.status(404).send("User not found");
 
-    res.json(updatedUser);
+    res.json({
+      user: updatedUser,
+      message: "Profile Updated Successfully"
+    });
+
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
