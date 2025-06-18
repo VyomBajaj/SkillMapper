@@ -13,27 +13,35 @@ import Profile from './components/Profile.jsx'
 import RoleDetailPage from './components/RoleDetailsPage/RoleDetailPage.jsx'
 import PersonalizedRoamap from './components/PersonalisedRoadmap/PersonalizedRoadmap.jsx'
 import CompleteProfileForm from './components/CompleteProfileForm.jsx'
+import ProfileAndLoginValidation from './utils/ProfileAndLoginValidation.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<Layout/>}>
-      <Route path ='' element={<Home/>}/>
-      <Route path = 'login' element={<LoginForm/>}/>
-      <Route path = 'signup' element={<Signup/>}/>
-      <Route path='dashboard' element={<PrivateRoute/>}>
-        <Route path ='' element = {<Dashboard/>}/>
-        <Route path='details/:id' element={<RoleDetailPage/>}/>
+    <Route path='/' element={<Layout />}>
+      <Route path='' element={<Home />} />
+      <Route path='login' element={<LoginForm />} />
+      <Route path='signup' element={<Signup />} />
+
+      {/* Public dashboard route */}
+      <Route path='dashboard' element={<Dashboard />} />
+
+      {/* Protected details route */}
+      <Route element={<PrivateRoute />}>
+        <Route path='dashboard/details/:id' element={<RoleDetailPage />} />
+        <Route path='complete-profile' element={<CompleteProfileForm />} />
       </Route>
-      <Route path = 'personalised-roadmap' element = {<PersonalizedRoamap/>}/>
-      <Route path = 'complete-profile' element = {<CompleteProfileForm/>}/>
+      <Route element={<ProfileAndLoginValidation />}>
+        <Route path='personalised-roadmap' element={<PersonalizedRoamap/>}></Route>
+      </Route>
     </Route>
   )
-)
+);
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
-    <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </AuthProvider>
   </StrictMode>
 )

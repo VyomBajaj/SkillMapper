@@ -7,11 +7,14 @@ import roleData from "../data/roles.json"
 import designationData from "../data/designation.json"
 import axios from "axios"
 import { useAuth } from "../utils/AuthProvider"
+import { useNavigate,useLocation } from "react-router-dom"
 
 const CompleteProfileForm = () => {
   const [loading, setLoading] = React.useState(false)
   const [avatarPreview, setAvatarPreview] = React.useState(null)
   const {isProfileCompleted,setIsProfileCompleted} = useAuth()
+  const location = useLocation();
+  const navigate = useNavigate()
 
   const {
     register,
@@ -65,7 +68,11 @@ const CompleteProfileForm = () => {
 
       const { message } = res.data
       setIsProfileCompleted(true)
-      toast.success(message)
+      const from = location.state?.from?.pathname || "/";
+      toast.success(message,{
+        onClose: () => navigate(from, { replace: true }),
+      })
+
     } catch (error) {
       toast.error("Something went wrong")
       console.log(error.message)

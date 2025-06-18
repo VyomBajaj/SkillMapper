@@ -7,6 +7,7 @@ import axios from 'axios'
 import { JobRoleCard } from './JobRoleCard';
 import { fetchUser } from '../../utils/getUser.js';
 import { TypewriterText } from './TypewriterEffect.jsx';
+import { useAuth } from '../../utils/AuthProvider.jsx';
 
 // Main Landing Page Component
 const Dashboard = () => {
@@ -14,14 +15,26 @@ const Dashboard = () => {
   const [trendingRoles, setTrendingRoles] = useState([]);
   const [otherRoles, setOtherRoles] = useState([]);
   const [user, setUser] = useState({});
+  const { isProfileCompleted,isLoggedIn } = useAuth();
+
+  const options = [
+    {
+      message: "Complete Your Profile",
+      path: "/complete-profile"
+    },
+    {
+      message:"See Personalised Roadmap",
+      path:"/personalised-roadmap"
+    }
+  ]
 
   // Dynamic greeting messages based on the career platform theme
   const greetingMessages = [
-    `Welcome back, ${user.username || 'Future Tech Leader'}! 🚀`,
-    `Ready to level up, ${user.username || 'Career Builder'}? 💪`,
-    `Your journey continues, ${user.username || 'Innovator'}! ✨`,
-    `Time to grow, ${user.username || 'Tech Explorer'}! 🌟`,
-    `Let's build your future, ${user.username || 'Developer'}! 🔥`
+    `Welcome back, ${user?.username || 'Future Tech Leader'}! 🚀`,
+    `Ready to level up, ${user?.username || 'Career Builder'}? 💪`,
+    `Your journey continues, ${user?.username || 'Innovator'}! ✨`,
+    `Time to grow, ${user?.username || 'Tech Explorer'}! 🌟`,
+    `Let's build your future, ${user?.username || 'Developer'}! 🔥`
   ];
 
   useEffect(() => {
@@ -52,7 +65,6 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       const res = await fetchUser();
-      console.log(res.data);
       setUser(res.data);
     };
     fetchUserDetails();
@@ -69,7 +81,15 @@ const Dashboard = () => {
   };
 
   const handleCompleteProfile = () => {
-    console.log('Navigate to profile completion');
+    if(isProfileCompleted){
+      navigate('/personalised-roadmap')
+    }
+    else if(!isLoggedIn){
+      navigate('/login')
+    }
+    else if(isLoggedIn && !isProfileCompleted){
+      navigate('/complete-profile')
+    }
   };
 
   return (
@@ -93,23 +113,23 @@ const Dashboard = () => {
         <div className="max-w-4xl mx-auto">
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 shadow-lg border border-blue-100">
             <h2 className="font-bold text-2xl md:text-3xl text-gray-800 mb-2">
-              <TypewriterText 
-                texts={greetingMessages} 
-                speed={80} 
-                deleteSpeed={40} 
-                pauseTime={3000} 
+              <TypewriterText
+                texts={greetingMessages}
+                speed={80}
+                deleteSpeed={40}
+                pauseTime={3000}
               />
             </h2>
             <p className="text-gray-600 text-lg">Ready to take the next step in your tech career?</p>
             <div className="flex justify-center mt-4">
               <div className="flex space-x-2">
                 <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
-                <div 
-                  className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" 
+                <div
+                  className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
                   style={{ animationDelay: '0.1s' }}
                 ></div>
-                <div 
-                  className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" 
+                <div
+                  className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
                   style={{ animationDelay: '0.2s' }}
                 ></div>
               </div>
@@ -178,7 +198,8 @@ const Dashboard = () => {
             className="border-gray-400 text-gray-300 hover:bg-gray-800 hover:text-white"
             onClick={handleCompleteProfile}
           >
-            Complete Your Profile
+            {!isProfileCompleted ? options[0].message :
+              options[1].message}
             <ArrowRight className="h-5 w-5 ml-2" />
           </Button>
         </div>

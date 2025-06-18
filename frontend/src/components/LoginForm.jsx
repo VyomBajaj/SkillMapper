@@ -1,12 +1,16 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import axios from 'axios'
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation } from "react-router-dom";
 import { useAuth } from "../utils/AuthProvider.jsx";
 import { Bounce, toast,ToastContainer } from 'react-toastify';
 
 const LoginForm = () => {
-  const { setIsLoggedIn } = useAuth();
+  const { setIsLoggedIn,isProfileCompleted,setIsProfileCompleted } = useAuth();
+
+
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const {
     register,
@@ -28,8 +32,9 @@ const LoginForm = () => {
         password: '',
       });
       setIsLoggedIn(true)
+      setIsProfileCompleted(res.data.isProfileCompleted);
 
-      toast(message, {
+      toast.success(message, {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,
@@ -39,7 +44,7 @@ const LoginForm = () => {
         progress: undefined,
         theme: "dark",
         transition: Bounce,
-        onClose: () => navigate('/'),
+        onClose: () => navigate(from, { replace: true }),
       });
     }
     catch (err) {
