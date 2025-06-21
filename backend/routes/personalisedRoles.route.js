@@ -40,7 +40,6 @@ router.get('/get-roadmap', fetchUser, async (req, res) => {
       role: user.goal,
     });
 
-    // 🔁 Transform topicNames & assign IDs
     const transformedSteps = rawResult.personalisedSteps.map((step) => ({
       ...step,
       topicNames: step.topicNames.map((name, index) => ({
@@ -48,7 +47,6 @@ router.get('/get-roadmap', fetchUser, async (req, res) => {
         name,
       })),
     }));
-
 
     const transformedCapstone = {
       ...rawResult.capstoneProject,
