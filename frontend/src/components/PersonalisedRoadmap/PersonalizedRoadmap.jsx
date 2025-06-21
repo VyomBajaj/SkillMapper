@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-import data from "./data.json"
+import axios from "axios"
 
 // Simple UI Components
 const Card = ({ children, className = "" }) => (
@@ -221,29 +221,36 @@ const Icons = {
 }
 
 // Custom hooks for scroll animations
-const useScrollAnimation = () => {
-  const [visibleElements, setVisibleElements] = useState(new Set())
+const useScrollAnimation = (trigger) => {
+  const [visibleElements, setVisibleElements] = useState(new Set());
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisibleElements((prev) => new Set([...prev, entry.target.id]))
+            setVisibleElements((prev) => new Set([...prev, entry.target.id]));
+            observer.unobserve(entry.target);
           }
-        })
+        });
       },
-      { threshold: 0.1, rootMargin: "50px" },
-    )
+      { threshold: 0.1, rootMargin: "50px" }
+    );
 
-    const elements = document.querySelectorAll("[data-animate]")
-    elements.forEach((el) => observer.observe(el))
+    const timeout = setTimeout(() => {
+      const elements = document.querySelectorAll("[data-animate]");
+      elements.forEach((el) => observer.observe(el));
+    }, 100); // Delay just enough to ensure DOM update
 
-    return () => observer.disconnect()
-  }, [])
+    return () => {
+      clearTimeout(timeout);
+      observer.disconnect();
+    };
+  }, [trigger]); // Rerun when data changes
 
-  return visibleElements
-}
+  return visibleElements;
+};
+
 
 const AnimatedCounter = ({ value, suffix = "" }) => {
   const [count, setCount] = useState(0)
@@ -325,27 +332,47 @@ const PersonalizedRoadmap = () => {
   const [activeStep, setActiveStep] = useState(null)
   const [checkedTopics, setCheckedTopics] = useState({})
   const [scrollProgress, setScrollProgress] = useState(0)
-  const visibleElements = useScrollAnimation()
+  const [data,setData] = useState(null)
+ const visibleElements = useScrollAnimation(data)
+
+  
+
+  useEffect(()=>{
+    const fetchData = async()=>{
+      const token = localStorage.getItem('authToken');
+      const res = await axios.get('/api/personalisedRole/get-roadmap',
+        {headers:{
+          authToken:token
+        }}
+      )
+      setData(res.data)
+      console.log("Response data:", res.data);
+    };
+    fetchData()
+  },[])
 
   // Initialize checked topics based on existing progress
   useEffect(() => {
-    const initialCheckedTopics = {}
+  if (!data) return;
 
-    data.personalisedSteps.forEach((step, stepIndex) => {
-      const stepKey = `step-${stepIndex}`
-      const checkedCount = Math.floor(((step.progress || 0) / 100) * step.topicNames.length)
-      initialCheckedTopics[stepKey] = new Set(step.topicNames.slice(0, checkedCount).map((topic) => topic.name))
-    })
+  const initialCheckedTopics = {}
 
-    const capstoneCheckedCount = Math.floor(
-      ((data.capstoneProject.progress || 0) / 100) * data.capstoneProject.topicNames.length,
-    )
-    initialCheckedTopics["capstone"] = new Set(
-      data.capstoneProject.topicNames.slice(0, capstoneCheckedCount).map((topic) => topic.name),
-    )
+  data.personalisedSteps.forEach((step, stepIndex) => {
+    const stepKey = `step-${stepIndex}`
+    const checkedCount = Math.floor(((step.progress || 0) / 100) * step.topicNames.length)
+    initialCheckedTopics[stepKey] = new Set(step.topicNames.slice(0, checkedCount).map((topic) => topic.name))
+  })
 
-    setCheckedTopics(initialCheckedTopics)
-  }, [])
+  const capstoneCheckedCount = Math.floor(
+    ((data.capstoneProject.progress || 0) / 100) * data.capstoneProject.topicNames.length,
+  )
+  initialCheckedTopics["capstone"] = new Set(
+    data.capstoneProject.topicNames.slice(0, capstoneCheckedCount).map((topic) => topic.name),
+  )
+
+  setCheckedTopics(initialCheckedTopics)
+}, [data]) 
+
 
   // Scroll progress tracking
   useEffect(() => {
@@ -375,6 +402,9 @@ const PersonalizedRoadmap = () => {
 
       return newCheckedTopics
     })
+  }
+  if(!data){
+    return <div>Loading data...</div>
   }
 
   const getStepProgress = (stepKey, totalTopics) => {
