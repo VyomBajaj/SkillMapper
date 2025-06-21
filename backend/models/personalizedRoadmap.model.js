@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { User } from "./user.model";
+import { User } from "./user.model.js";
 
 const TopicSchema = new mongoose.Schema({
     name:{
@@ -52,7 +52,7 @@ const capstoneProjectSchema = new mongoose.Schema({
         type:Number,
         default:0,
     },
-    topic:[TopicSchema],
+    topicNames:[TopicSchema],
     resources:[ResourceSchema],
 },{ _id: false })
 
@@ -68,7 +68,7 @@ const PhaseSchema = new mongoose.Schema({
         type:String,
         default:""
     },
-    topic:[TopicSchema],
+    topicNames:[TopicSchema],
     resources:[ResourceSchema],
     estimatedTime:{
         type:String,
@@ -102,7 +102,8 @@ const PersonalizedRoadmapSchema = new mongoose.Schema({
         default:[]
     },
     salary:{
-        type:Number
+        type:String,
+        default:""
     },
     description:{
         type:String,
@@ -112,7 +113,11 @@ const PersonalizedRoadmapSchema = new mongoose.Schema({
         type:String,
         default:""
     },
-    personalizedSteps:[PhaseSchema],
+    title:{
+        type:String,
+        default:""
+    },
+    personalisedSteps:[PhaseSchema],
     capstoneProject:capstoneProjectSchema
 })
 
