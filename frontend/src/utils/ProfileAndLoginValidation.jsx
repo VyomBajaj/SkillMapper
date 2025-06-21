@@ -15,7 +15,9 @@ export default function ProfileAndLoginValidation() {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  if(!isProfileCompleted){
+  if (loading) return <p>Loading..</p>
+
+  if(isProfileCompleted === false){
     console.log(location.pathname)
     return <Navigate to ="/complete-profile" replace state = {{from:location}}/>
   }
