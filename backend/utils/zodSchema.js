@@ -4,7 +4,7 @@ export const UserRoadmapSchema = z.object({
   title: z.string(),
   description: z.string(),
   role: z.string(),
-  salary: z.string(),
+  salary: z.string().describe("Only Range of salary in Indian Rupees"),
   currentSkills: z.array(z.string()),
   growth: z.string(),
   personalisedSteps: z.array(
