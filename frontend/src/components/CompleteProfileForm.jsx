@@ -50,6 +50,7 @@ const CompleteProfileForm = () => {
     formData.append("timeCanGive", data.time)
     formData.append("designation", data.Designation)
     formData.append("bio", data.bio)
+    formData.append("githubUsername",data.githubUsername)
 
     const skills = data.Skill.map((skill) => skill.value)
     formData.append("skillSet", JSON.stringify(skills))
@@ -277,6 +278,21 @@ const CompleteProfileForm = () => {
                 />
                 {errors.bio && <p className="text-red-400 text-sm mt-1">{errors.bio.message}</p>}
               </div>
+              <label htmlFor="githubUsername" className="block text-sm mb-1 text-white">Github Username</label>
+              <input
+              type="text"
+              id="githubUsername"
+              {...register("githubUsername",
+                {
+                  required: "githubusername is required",
+                  minLength: {
+                    value: 2,
+                    message: "Enter valid username"
+                  }
+
+                })}
+              className="w-full px-4 py-2 bg-gray-700 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
             </div>
 
             {/* Submit Section */}

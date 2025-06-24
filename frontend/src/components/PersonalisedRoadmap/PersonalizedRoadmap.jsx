@@ -8,7 +8,6 @@ import { Button } from "./ButtonPerRoadmap"
 import { Progress } from "./Progress"
 import { Code, BookOpen, Video, FileText, BookMarked, Globe, Sparkles, TrendingUp, BarChart3, Clock, Target, CheckCircle2, CheckCircle, Circle, CheckSquare, ExternalLink, ChevronDown } from "lucide-react"
 import { AnimatedCounter } from "./AnimatedCounter"
-import { ClipLoader } from "react-spinners";
 
 import axios from "axios"
 
