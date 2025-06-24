@@ -62,6 +62,22 @@ const userSchema = new mongoose.Schema({
     time:{
       type:String,
       default:""
+    },
+    githubUsername:{
+      type:String,
+      default:""
+    },
+    linkedinUsername:{
+      type:String,
+      default:""
+    },
+    twitterLink:{
+      type:String,
+      default:""
+    },
+    isProfileEdited:{
+      type:Boolean,
+      default:false
     }
 },{timestamps:true})
 
