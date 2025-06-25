@@ -5,12 +5,18 @@ import authRouter from './routes/auth.route.js'
 import staticRoleRouter from './routes/staticRoles.route.js'
 import userRouter from './routes/user.route.js'
 import personalisedRoleRouter from './routes/personalisedRoles.route.js'
+import cors from 'cors'
 
 dotenv.config()
 connectDB()
 
 const app = express()
-const PORT = 8000
+const PORT = process.env.PORT || 8000
+
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://your-frontend-url.vercel.app'], // whitelist local + deployed frontend
+  credentials: true // if you're using cookies or auth headers
+}));
 
 app.use(express.json())
 app.use(express.urlencoded({
