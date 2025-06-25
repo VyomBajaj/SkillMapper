@@ -14,7 +14,7 @@ const app = express()
 const PORT = process.env.PORT || 8000
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://your-frontend-url.vercel.app'], // whitelist local + deployed frontend
+  origin: ['http://localhost:5173', process.env.FRONTEND_URI], // whitelist local + deployed frontend
   credentials: true // if you're using cookies or auth headers
 }));
 
