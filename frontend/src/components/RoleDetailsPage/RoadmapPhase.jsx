@@ -13,7 +13,7 @@ import { TabsContent } from "./Tabs/TabsContent";
 import { TabsTrigger } from "./Tabs/TabsTrigger";
 import { TabsList } from "./Tabs/TabsList";
 import { ResourceCard } from "./ResourceCard";
-import { ProjectCard } from "./Projectcard";
+import { ProjectCard } from "./ProjectCard"
 
 export const RoadmapPhase = ({ phase, roadmapId, isCompleted = false ,onProgressUpdate}) => {
   const [checkedTopics, setCheckedTopics] = useState({});
