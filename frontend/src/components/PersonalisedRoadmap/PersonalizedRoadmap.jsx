@@ -25,29 +25,30 @@ const Checkbox = ({ id, checked = false, onCheckedChange, className = "" }) => (
 const useScrollAnimation = (trigger) => {
   const [visibleElements, setVisibleElements] = useState(new Set());
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisibleElements((prev) => new Set([...prev, entry.target.id]));
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "50px" }
-    );
+useEffect(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setVisibleElements((prev) => new Set([...prev, entry.target.id]));
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "50px" }
+  );
 
-    const timeout = setTimeout(() => {
-      const elements = document.querySelectorAll("[data-animate]");
-      elements.forEach((el) => observer.observe(el));
-    }, 100); // Delay just enough to ensure DOM update
+  const timeout = setTimeout(() => {
+    const elements = document.querySelectorAll("[data-animate]");
+    elements.forEach((el) => observer.observe(el));
+  }, 1500); // increase from 1000ms to 1500ms
 
-    return () => {
-      clearTimeout(timeout);
-      observer.disconnect();
-    };
-  }, [trigger]); // Rerun when data changes
+  return () => {
+    clearTimeout(timeout);
+    observer.disconnect();
+  };
+}, [trigger]);
+
 
   return visibleElements;
 };
