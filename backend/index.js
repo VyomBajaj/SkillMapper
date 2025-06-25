@@ -34,5 +34,5 @@ app.use('/api/user',userRouter)
 app.use('/api/personalisedRole',personalisedRoleRouter)
 
 app.listen(PORT,()=>{
-    console.log("App running on PORT 8000")
+    console.log(`App running on PORT ${PORT}`)
 })
