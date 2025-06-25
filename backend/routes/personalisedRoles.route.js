@@ -189,23 +189,23 @@ router.patch('/progress/updateProject', fetchUser, async (req, res) => {
 router.get('/progress', fetchUser, async (req, res) => {
   try {
     const user = req.user.id;
-    const progress = await PersonalizedProgress.findOne({ userId: user })
+    const progress = await PersonalizedProgress.findOne({ userId: user });
+    
     if (!progress) {
-      if (!progress) {
-        return res.status(200).json({ completedTopics: [], completedProjects: [] })
-      }
-
+      return res.status(200).json({ 
+        completedTopics: [], 
+        completedProjects: [] 
+      });
     }
+    
     return res.status(200).json({
-      completedTopics: progress.completedTopics,
-      completedProjects: progress.completedCapstoneTopics
-    })
+      completedTopics: progress.completedTopics || [],
+      completedProjects: progress.completedCapstoneTopics || []
+    });
+  } catch (error) {
+    console.log('Error in fetching progress', error.message);
+    return res.status(500).json({ error: error.message });
   }
-  catch (error) {
-    console.log('Error in fetching progress',error.message)
-    return res.status(500).send(error.message)
-  }
-
-})
+});
 
 export default router;
