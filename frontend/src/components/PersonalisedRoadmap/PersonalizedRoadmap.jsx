@@ -102,13 +102,13 @@ const PersonalizedRoadmap = () => {
       const token = localStorage.getItem("authToken");
       /* fetch roadmap */
       const { data: roadmap } = await axios.get(
-        "/api/personalisedRole/get-roadmap",
+        `${import.meta.env.VITE_BACKEND_URL}/api/personalisedRole/get-roadmap`,
         { headers: { authToken: token } }
       );
       setData(roadmap);
 
       const { data: progress } = await axios.get(
-        "/api/personalisedRole/progress",
+        `${import.meta.env.VITE_BACKEND_URL}/api/personalisedRole/progress`,
         { headers: { authToken: token } }
       );
 
@@ -154,14 +154,14 @@ const PersonalizedRoadmap = () => {
 
       if (stepKey === "capstone") {
         await axios.patch(
-          "/api/personalisedRole/progress/updateProject",
+          `${import.meta.env.VITE_BACKEND_URL}/api/personalisedRole/progress/updateProject`,
           { topicId, action: checked ? "add" : "remove" },
           { headers: { authToken: token } }
         );
       }
       else {
         await axios.patch(
-          "/api/personalisedRole/progress/updateTopic",
+          `${import.meta.env.VITE_BACKEND_URL}/api/personalisedRole/progress/updateTopic`,
           {
             phaseId,            // numeric index of the phase
             topicId,            // numeric id of the topic

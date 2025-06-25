@@ -16,7 +16,7 @@ const ProfilePage = () => {
     const fetchUserProfile = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const { data: profile } = await axios.get("/api/user/get-profile", {
+        const { data: profile } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/get-profile`, {
           headers: { authToken: token },
         });
         console.log("Fetched Profile:", profile);

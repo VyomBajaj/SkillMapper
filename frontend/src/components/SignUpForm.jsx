@@ -13,7 +13,7 @@ const Signup = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post('/api/auth/register', data);
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, data);
       const { message, authToken } = res.data
       localStorage.setItem('authToken', authToken);
       reset({

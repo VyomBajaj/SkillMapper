@@ -23,7 +23,7 @@ const LoginForm = () => {
   // Form submit handler
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post('/api/auth/login', data)
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, data)
       const { message, authToken } = res.data
 
       localStorage.setItem('authToken', authToken)

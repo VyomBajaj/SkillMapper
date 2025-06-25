@@ -24,7 +24,7 @@ export const RoadmapPhase = ({ phase, roadmapId, isCompleted = false ,onProgress
     const fetchProgress = async () => {
       try {
         const token = localStorage.getItem('authToken');
-        const res = await axios.get(`/api/staticRoles/progress/${roadmapId}`,
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/staticRoles/progress/${roadmapId}`,
           {
             headers: {
               'authToken': token
@@ -65,7 +65,7 @@ export const RoadmapPhase = ({ phase, roadmapId, isCompleted = false ,onProgress
     try {
       const token = localStorage.getItem('authToken')
       await axios.patch(
-        "/api/staticRoles/progress/updateTopic",
+        `${import.meta.env.VITE_BACKEND_URL}/api/staticRoles/progress/updateTopic`,
         {
           topicId,
           phaseId: phase.id,
@@ -94,7 +94,7 @@ export const RoadmapPhase = ({ phase, roadmapId, isCompleted = false ,onProgress
     try {
       const token = localStorage.getItem('authToken')
       await axios.patch(
-        "/api/staticRoles/progress/updateProject",
+        `${import.meta.env.VITE_BACKEND_URL}/api/staticRoles/progress/updateProject`,
         {
           projectId,
           phaseId: phase.id,

@@ -19,7 +19,7 @@ const RoleDetailPage = () => {
   useEffect(() => {
     const fetchRoleDetails = async () => {
       try {
-        const res = await axios.get(`/api/staticRoles/details/${id}`)
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/staticRoles/details/${id}`)
         setRole(res.data)
       }
       catch (error) {

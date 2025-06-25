@@ -40,7 +40,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchTrendingRoles = async () => {
       try {
-        const res = await axios.get('/api/staticRoles/get-trending-roles');
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/staticRoles/get-trending-roles`);
         setTrendingRoles(res.data);
       } catch (error) {
         console.log("Error in getting trending roles:", error);
@@ -53,7 +53,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchOtherRoles = async () => {
       try {
-        const res = await axios.get('/api/staticRoles/other-roles');
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/staticRoles/other-roles`);
         setOtherRoles(res.data);
       } catch (error) {
         console.log("Error in getting other roles:", error);
@@ -117,7 +117,7 @@ const Dashboard = () => {
                 texts={greetingMessages}
                 speed={80}
                 deleteSpeed={40}
-                pauseTime={3000}
+                pauseTime={3000} 
               />
             </h2>
             <p className="text-gray-600 text-lg">Ready to take the next step in your tech career?</p>

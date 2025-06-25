@@ -60,7 +60,7 @@ const CompleteProfileForm = () => {
     }
 
     try {
-      const res = await axios.post("/api/user/complete-profile", formData, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/complete-profile`, formData, {
         headers: {
           authToken: token,
           "Content-Type": "multipart/form-data",

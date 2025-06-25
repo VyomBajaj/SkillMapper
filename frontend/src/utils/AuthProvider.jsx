@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   if (token) {
     setIsLoggedIn(true);
 
-    axios.post('/api/auth/getuser',{}, {
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/getuser`,{}, {
       headers: {
         authToken: token,
       },
