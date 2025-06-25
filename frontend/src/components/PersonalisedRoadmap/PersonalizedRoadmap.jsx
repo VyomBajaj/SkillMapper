@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import { Card } from "./CardPerRoadmap/Card"
 import { CardHeader } from "./CardPerRoadmap/CardHeader"
 import { CardTitle } from "./CardPerRoadmap/CardTitle"
@@ -11,7 +11,8 @@ import { AnimatedCounter } from "./AnimatedCounter"
 
 import axios from "axios"
 
-const Checkbox = ({ id, checked = false, onCheckedChange, className = "" }) => (
+// Memoized Checkbox component
+const Checkbox = React.memo(({ id, checked = false, onCheckedChange, className = "" }) => (
   <input
     type="checkbox"
     id={id}
@@ -19,41 +20,51 @@ const Checkbox = ({ id, checked = false, onCheckedChange, className = "" }) => (
     onChange={(e) => onCheckedChange && onCheckedChange(e.target.checked)}
     className={`h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 ${className}`}
   />
-)
+))
 
-// Custom hooks for scroll animations
+// Optimized scroll animation hook - debounced
 const useScrollAnimation = (trigger) => {
   const [visibleElements, setVisibleElements] = useState(new Set());
+  const observerRef = useRef(null);
 
-useEffect(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setVisibleElements((prev) => new Set([...prev, entry.target.id]));
-          observer.unobserve(entry.target);
+  useEffect(() => {
+    if (!trigger) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const newVisible = new Set();
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            newVisible.add(entry.target.id);
+            observer.unobserve(entry.target);
+          }
+        });
+        
+        if (newVisible.size > 0) {
+          setVisibleElements((prev) => new Set([...prev, ...newVisible]));
         }
-      });
-    },
-    { threshold: 0.1, rootMargin: "50px" }
-  );
+      },
+      { threshold: 0.1, rootMargin: "50px" }
+    );
 
-  const timeout = setTimeout(() => {
-    const elements = document.querySelectorAll("[data-animate]");
-    elements.forEach((el) => observer.observe(el));
-  }, 1500); // increase from 1000ms to 1500ms
+    observerRef.current = observer;
 
-  return () => {
-    clearTimeout(timeout);
-    observer.disconnect();
-  };
-}, [trigger]);
+    // Reduced timeout and batch observe elements
+    const timeout = setTimeout(() => {
+      const elements = document.querySelectorAll("[data-animate]");
+      elements.forEach((el) => observer.observe(el));
+    }, 500); // Reduced from 1500ms
 
+    return () => {
+      clearTimeout(timeout);
+      observer.disconnect();
+    };
+  }, [trigger]);
 
   return visibleElements;
 };
 
-// Utility functions
+// Utility functions (moved outside component to avoid recreating)
 const getResourceIcon = (type) => {
   switch (type.toLowerCase()) {
     case "course":
@@ -71,7 +82,7 @@ const getResourceIcon = (type) => {
     default:
       return <Globe />
   }
-}
+};
 
 const getDifficultyColor = (difficulty) => {
   switch (difficulty?.toLowerCase()) {
@@ -84,137 +95,212 @@ const getDifficultyColor = (difficulty) => {
     default:
       return "bg-gray-100 text-gray-700 border-gray-200"
   }
-}
+};
 
 // Main Component
 const PersonalizedRoadmap = () => {
-  let [loading, setLoading] = useState(true);
-  const [activeStep, setActiveStep] = useState(null)
-  const [checkedTopics, setCheckedTopics] = useState({})
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const [data, setData] = useState(null)
-  const visibleElements = useScrollAnimation(data)
+  const [loading, setLoading] = useState(true);
+  const [activeStep, setActiveStep] = useState(null);
+  const [checkedTopics, setCheckedTopics] = useState({});
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [data, setData] = useState(null);
+  
+  // Use refs to prevent unnecessary re-renders
+  const pendingUpdates = useRef(new Set());
+  const updateTimeoutRef = useRef(null);
+  
+  const visibleElements = useScrollAnimation(data);
 
+  // Debounced scroll handler
+  const handleScroll = useCallback(() => {
+    const scrolled = window.scrollY;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
+    setScrollProgress(progress);
+  }, []);
 
-
- useEffect(() => {
-  const fetchEverything = async () => {
-    try {
-      const token = localStorage.getItem("authToken");
-      /* fetch roadmap */
-      const { data: roadmap } = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/personalisedRole/get-roadmap`,
-        { headers: { authToken: token } }
-      );
-      setData(roadmap);
-
-      const { data: progress } = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/api/personalisedRole/progress`,
-        { headers: { authToken: token } }
-      );
-
-    } 
-    catch (err) {
-      console.error(err);
-    } 
-    finally {
-      setLoading(false);
-    }
-  };
-
-  fetchEverything();
-}, []);
-
-  // Scroll progress tracking
+  // Throttled scroll event
   useEffect(() => {
-    const handleScroll = () => {
-      const scrolled = window.scrollY
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
-      const progress = (scrolled / maxScroll) * 100
-      setScrollProgress(progress)
-    }
+    let ticking = false;
+    
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", throttledScroll, { passive: true });
+    return () => window.removeEventListener("scroll", throttledScroll);
+  }, [handleScroll]);
 
-  const handleTopicCheck = async (stepKey, phaseId, topicId, checked) => {
-    /* optimistic UI */
+  // Optimized data fetching
+  useEffect(() => {
+    const fetchEverything = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        
+        // Parallel API calls
+        const [roadmapResponse, progressResponse] = await Promise.all([
+          axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/personalisedRole/get-roadmap`,
+            { headers: { authToken: token } }
+          ),
+          axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/personalisedRole/progress`,
+            { headers: { authToken: token } }
+          )
+        ]);
+
+        setData(roadmapResponse.data);
+
+        // Batch state update for checked topics
+        const initialCheckedTopics = {};
+        
+        if (progressResponse.data.completedTopics?.length > 0) {
+          progressResponse.data.completedTopics.forEach(({ phaseId, topicId }) => {
+            const stepKey = `step-${phaseId}`;
+            if (!initialCheckedTopics[stepKey]) {
+              initialCheckedTopics[stepKey] = new Set();
+            }
+            initialCheckedTopics[stepKey].add(topicId);
+          });
+        }
+
+        if (progressResponse.data.completedProjects?.length > 0) {
+          initialCheckedTopics["capstone"] = new Set();
+          progressResponse.data.completedProjects.forEach(({ topicId }) => {
+            initialCheckedTopics["capstone"].add(topicId);
+          });
+        }
+
+        setCheckedTopics(initialCheckedTopics);
+
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEverything();
+  }, []);
+
+  // Debounced API updates
+  const handleTopicCheck = useCallback(async (stepKey, phaseId, topicId, checked) => {
+    // Optimistic UI update
     setCheckedTopics((prev) => {
       const next = { ...prev };
       if (!next[stepKey]) next[stepKey] = new Set();
-      checked ? next[stepKey].add(topicId) : next[stepKey].delete(topicId);
+      
+      if (checked) {
+        next[stepKey].add(topicId);
+      } else {
+        next[stepKey].delete(topicId);
+      }
       return next;
     });
-    console.log("PATCH payload:", {
-  stepKey, phaseId, topicId, checked
-    });
 
-    try {
-      const token = localStorage.getItem("authToken");
+    // Add to pending updates
+    const updateKey = `${stepKey}-${topicId}`;
+    pendingUpdates.current.add(updateKey);
 
-      if (stepKey === "capstone") {
-        await axios.patch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/personalisedRole/progress/updateProject`,
-          { topicId, action: checked ? "add" : "remove" },
-          { headers: { authToken: token } }
-        );
-      }
-      else {
-        await axios.patch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/personalisedRole/progress/updateTopic`,
-          {
-            phaseId,            // numeric index of the phase
-            topicId,            // numeric id of the topic
-            action: checked ? "add" : "remove"
-          },
-          { headers: { authToken: token } }
-        );
-      }
-    } catch (err) {
-      console.error("Progress update failed:", err);
+    // Clear existing timeout
+    if (updateTimeoutRef.current) {
+      clearTimeout(updateTimeoutRef.current);
     }
-  };
 
-if (loading) {
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-sky-100">
-      <h2 className="text-2xl font-semibold text-blue-700 mb-4 animate-pulse">Generating your roadmap...</h2>
+    // Debounce API calls
+    updateTimeoutRef.current = setTimeout(async () => {
+      if (!pendingUpdates.current.has(updateKey)) return;
+      
+      try {
+        const token = localStorage.getItem("authToken");
 
-      {/* Looping animated progress bar */}
-      <div className="w-64 h-2 bg-blue-200 rounded-full overflow-hidden">
-        <div className="h-full bg-blue-300 animate-loading-bar rounded-full"></div>
-      </div>
-    </div>
-  );
-}
+        if (stepKey === "capstone") {
+          await axios.patch(
+            `${import.meta.env.VITE_BACKEND_URL}/api/personalisedRole/progress/updateProject`,
+            { topicId, action: checked ? "add" : "remove" },
+            { headers: { authToken: token } }
+          );
+        } else {
+          await axios.patch(
+            `${import.meta.env.VITE_BACKEND_URL}/api/personalisedRole/progress/updateTopic`,
+            { phaseId, topicId, action: checked ? "add" : "remove" },
+            { headers: { authToken: token } }
+          );
+        }
+        
+        pendingUpdates.current.delete(updateKey);
+      } catch (err) {
+        console.error("Progress update failed:", err);
+        pendingUpdates.current.delete(updateKey);
+        
+        // Rollback on error
+        setCheckedTopics((prev) => {
+          const next = { ...prev };
+          if (!next[stepKey]) next[stepKey] = new Set();
+          
+          if (checked) {
+            next[stepKey].delete(topicId);
+          } else {
+            next[stepKey].add(topicId);
+          }
+          return next;
+        });
+      }
+    }, 300); // 300ms debounce
+  }, []);
 
+  // Memoized calculations
+  const getStepProgress = useCallback((stepKey, totalTopics) => {
+    const checkedCount = checkedTopics[stepKey]?.size || 0;
+    return Math.round((checkedCount / totalTopics) * 100);
+  }, [checkedTopics]);
 
-  const getStepProgress = (stepKey, totalTopics) => {
-    const checkedCount = checkedTopics[stepKey]?.size || 0
-    return Math.round((checkedCount / totalTopics) * 100)
-  }
+  const handleStepClick = useCallback((index) => {
+    setActiveStep(activeStep === index ? null : index);
+  }, [activeStep]);
 
-  const handleStepClick = (index) => {
-    setActiveStep(activeStep === index ? null : index)
-  }
-
-  const calculateOverallProgress = () => {
-    let totalTopics = 0
-    let checkedCount = 0
+  const overallProgress = useMemo(() => {
+    if (!data) return 0;
+    
+    let totalTopics = 0;
+    let checkedCount = 0;
 
     data.personalisedSteps.forEach((step, index) => {
-      totalTopics += step.topicNames.length
-      checkedCount += checkedTopics[`step-${index}`]?.size || 0
-    })
+      totalTopics += step.topicNames.length;
+      checkedCount += checkedTopics[`step-${index}`]?.size || 0;
+    });
 
-    totalTopics += data.capstoneProject.topicNames.length
-    checkedCount += checkedTopics["capstone"]?.size || 0
+    totalTopics += data.capstoneProject.topicNames.length;
+    checkedCount += checkedTopics["capstone"]?.size || 0;
 
-    return totalTopics > 0 ? Math.round((checkedCount / totalTopics) * 100) : 0
+    return totalTopics > 0 ? Math.round((checkedCount / totalTopics) * 100) : 0;
+  }, [data, checkedTopics]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (updateTimeoutRef.current) {
+        clearTimeout(updateTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-sky-100">
+        <h2 className="text-2xl font-semibold text-blue-700 mb-4">Generating your roadmap...</h2>
+        <div className="w-64 h-2 bg-blue-200 rounded-full overflow-hidden">
+          <div className="h-full bg-blue-300 animate-pulse rounded-full"></div>
+        </div>
+      </div>
+    );
   }
-
-  const overallProgress = calculateOverallProgress()
 
   return (
     <div className="min-h-screen relative bg-gradient-to-br from-blue-50 via-white to-sky-50">
