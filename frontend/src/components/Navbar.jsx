@@ -24,7 +24,7 @@ useEffect(() => {
   return (
     <div className="bg-gradient-to-tr from-slate-900 via-gray-900 to-gray-800 text-white">
       <header className="w-full px-8 py-6 flex justify-between items-center border-b border-gray-700">
-        <h1 className="text-2xl font-bold tracking-tight">SkillMap</h1>
+        <NavLink to = '/' className="text-2xl font-bold tracking-tight">SkillMap</NavLink>
         <nav className="flex gap-6 text-sm">
           {!isLoggedIn ? (
             <>
@@ -43,7 +43,7 @@ useEffect(() => {
                <NavLink to='/dashboard' className={({ isActive }) => {
                 return `hover:text-orange-400 transition ${isActive ? 'text-orange-500' : 'text-gray-300'}`
               }}>Dashboard</NavLink>
-              <NavLink to='/' className={({ isActive }) => {
+              <NavLink to='/profile' className={({ isActive }) => {
                 return `hover:text-orange-400 transition ${isActive ? 'text-orange-500' : 'text-gray-300'}`
               }}>Hi:{userData.username}</NavLink>
               <Link

@@ -16,6 +16,7 @@ const Dashboard = () => {
   const [otherRoles, setOtherRoles] = useState([]);
   const [user, setUser] = useState({});
   const { isProfileCompleted,isLoggedIn } = useAuth();
+  const [loading,setLoading] = useState(true)
 
   const options = [
     {
@@ -66,9 +67,21 @@ const Dashboard = () => {
     const fetchUserDetails = async () => {
       const res = await fetchUser();
       setUser(res.data);
+      setLoading(false)
     };
     fetchUserDetails();
   }, []);
+
+    if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-sky-100">
+        <h2 className="text-2xl font-semibold text-blue-700 mb-4 animate-pulse">Loading Roadmaps...</h2>
+        <div className="w-64 h-2 bg-blue-200 rounded-full overflow-hidden">
+          <div className="h-full bg-blue-300 animate-loading-bar rounded-full"></div>
+        </div>
+      </div>
+    );
+  }
 
   const handleViewRoadmap = (roleId) => {
     console.log(`Navigate to roadmap for: ${roleId}`);

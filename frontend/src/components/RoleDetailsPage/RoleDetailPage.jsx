@@ -31,7 +31,14 @@ const RoleDetailPage = () => {
   }, [])
 
    if (!role[0]) {
-    return <div className="text-center py-10 text-xl">Loading role details...</div>;
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-sky-100">
+        <h2 className="text-2xl font-semibold text-blue-700 mb-4 animate-pulse">Loading Details...</h2>
+        <div className="w-64 h-2 bg-blue-200 rounded-full overflow-hidden">
+          <div className="h-full bg-blue-300 animate-loading-bar rounded-full"></div>
+        </div>
+      </div>
+    );
   }
 
   return (

@@ -14,6 +14,7 @@ import PersonalizedRoamap from './components/PersonalisedRoadmap/PersonalizedRoa
 import CompleteProfileForm from './components/CompleteProfileForm.jsx'
 import ProfileAndLoginValidation from './utils/ProfileAndLoginValidation.jsx'
 import ProfilePage from './components/ProfilePage.jsx'
+import AIChat from './components/AIChat.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
       <Route path='login' element={<LoginForm />} />
       <Route path='signup' element={<Signup />} />
       <Route path = 'profile' element = {<ProfilePage/>}/>
+      <Route path = 'ai-chat' element = {<AIChat/>}/>
 
       {/* Public dashboard route */}
       <Route path='dashboard' element={<Dashboard />} />
